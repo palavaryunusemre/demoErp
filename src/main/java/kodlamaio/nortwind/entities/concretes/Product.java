@@ -25,7 +25,7 @@ public class Product {
     private short  unitsInStock;
     @Column(name="quantity_per_unit")
     private String quantityPerUnit;
-    @ManyToMany() // products -> categories
+    @ManyToOne() // products -> categories
     @JoinColumn(name = "category_id")
     private Category category;
 }
