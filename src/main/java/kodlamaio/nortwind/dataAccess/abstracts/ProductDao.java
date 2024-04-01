@@ -1,6 +1,7 @@
 package kodlamaio.nortwind.dataAccess.abstracts;
 
 import kodlamaio.nortwind.entities.concretes.Product;
+import kodlamaio.nortwind.entities.dtos.ProductWithCategoryDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -17,7 +18,8 @@ public interface ProductDao extends JpaRepository<Product,Integer> {
     List<Product> getByCategoryIn(List<Integer> categories);
     @Query("From Product where productName LIKE %:productName%")
     List<Product> getByProductNameContains(String productName);
-    @Query("FROM Product WHERE productName LIKE CONCAT(:productName, '%')")
+    @Query("From Product where productName LIKE CONCAT(:productName, '%')")
     List<Product> getByProductNameStartsWith(String productName);
-
+    @Query("Select new kodlamaio.nortwind.entities.dtos.ProductWithCategoryDto(p.id, p.productName, c.categoryName) From Category c Inner Join c.products p")
+    List<ProductWithCategoryDto> getProductWithCategoryDetails();
 }

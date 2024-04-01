@@ -4,6 +4,7 @@ import kodlamaio.nortwind.business.abstracts.ProductService;
 import kodlamaio.nortwind.core.utilities.results.DataResult;
 import kodlamaio.nortwind.core.utilities.results.Result;
 import kodlamaio.nortwind.entities.concretes.Product;
+import kodlamaio.nortwind.entities.dtos.ProductWithCategoryDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,6 +57,10 @@ public class ProductsController {
     @GetMapping("/getByProductNameStartsWith")
     public DataResult<List<Product>> getByProductNameStartsWith(@RequestParam String productName){
         return this.productService.getByProductNameStartsWith(productName);
+    }
+    @GetMapping("/getProductWithCategoryDetails")
+    public DataResult<List<ProductWithCategoryDto>> getProductWithCategoryDetails(){
+        return this.productService.getProductWithCategoryDetails();
     }
 
 }

@@ -3,6 +3,7 @@ package kodlamaio.nortwind.business.abstracts;
 import kodlamaio.nortwind.core.utilities.results.DataResult;
 import kodlamaio.nortwind.core.utilities.results.Result;
 import kodlamaio.nortwind.entities.concretes.Product;
+import kodlamaio.nortwind.entities.dtos.ProductWithCategoryDto;
 
 import java.util.List;
 
@@ -17,5 +18,6 @@ public interface ProductService {
     DataResult <List<Product>> getByCategoryIdIn(List<Integer> categories);
     DataResult <List<Product>> getByProductNameContains(String productName);
     DataResult <List<Product>> getByProductNameStartsWith(String productName);
+    DataResult<List<ProductWithCategoryDto>> getProductWithCategoryDetails();
 
 }
