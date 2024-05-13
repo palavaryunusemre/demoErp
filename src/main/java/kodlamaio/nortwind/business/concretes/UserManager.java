@@ -24,4 +24,16 @@ public class UserManager implements UserService {
     public DataResult<User> findByEmail(String email) {
         return new SuccessDataResult<User>(this.userDao.findByEmail(email),"Kullanıcı bulundu");
     }
+
+    @Override
+    public DataResult<User> getByUserControl(String email, String password) {
+        User user = this.userDao.getByUserControl(email, password);
+        if (user != null) {
+            // Kullanıcı bulunduysa
+            return new DataResult<>(user, true, "Kullanıcı bulundu");
+        } else {
+            // Kullanıcı bulunamadıysa
+            return new DataResult<>(null, false, "Kullanıcı bulunamadı");
+        }
+    }
 }

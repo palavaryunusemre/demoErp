@@ -3,6 +3,7 @@ package kodlamaio.nortwind.api.controller;
 import jakarta.validation.Valid;
 import kodlamaio.nortwind.business.abstracts.UserService;
 import kodlamaio.nortwind.core.entities.User;
+import kodlamaio.nortwind.core.utilities.results.DataResult;
 import kodlamaio.nortwind.core.utilities.results.ErrorDataResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api/users")
+@CrossOrigin
 public class UsersController {
     private UserService userService;
     @Autowired
@@ -26,6 +28,11 @@ public class UsersController {
     public ResponseEntity<?> add(@Valid @RequestBody User user) {
         return ResponseEntity.ok(this.userService.add(user));
     }
+    @GetMapping("/getByUserControl")
+    public DataResult<User> getByUserControl(@RequestParam String email, @RequestParam String password) {
+        return this.userService.getByUserControl(email,password);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorDataResult<Object> handleValidationException(MethodArgumentNotValidException exceptions){
