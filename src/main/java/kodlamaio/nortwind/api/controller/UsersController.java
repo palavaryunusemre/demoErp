@@ -46,7 +46,7 @@ public class UsersController {
         for(FieldError fieldError : exceptions.getBindingResult().getFieldErrors()) {
             validationErrors.put(fieldError.getField(),fieldError.getDefaultMessage());
         }
-        ErrorDataResult<Object> errors = new ErrorDataResult<Object>(validationErrors,"Doğrulama Hataları");
+        ErrorDataResult<Object> errors = new ErrorDataResult<Object>(validationErrors,"Format error.");
         return errors;
     }
 }

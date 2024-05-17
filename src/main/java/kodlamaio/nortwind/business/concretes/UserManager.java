@@ -6,7 +6,7 @@ import kodlamaio.nortwind.core.entities.User;
 import kodlamaio.nortwind.core.utilities.results.DataResult;
 import kodlamaio.nortwind.core.utilities.results.Result;
 import kodlamaio.nortwind.core.utilities.results.SuccessDataResult;
-import kodlamaio.nortwind.core.utilities.results.SuccessResult;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,8 +17,13 @@ public class UserManager implements UserService {
     }
     @Override
     public Result add(User user) {
-        this.userDao.save(user);
-        return new SuccessResult("Kullanıcı eklendi");
+        try {
+            this.userDao.save(user);
+            return new Result(true,"User has been created.");
+        }catch (DataIntegrityViolationException e){
+            return new Result(false,"Email already exists");
+        }
+
     }
     @Override
     public DataResult<User> findByEmail(String email) {
