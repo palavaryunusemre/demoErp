@@ -6,6 +6,7 @@ import kodlamaio.nortwind.core.entities.User;
 import kodlamaio.nortwind.core.utilities.results.DataResult;
 import kodlamaio.nortwind.core.utilities.results.Result;
 import kodlamaio.nortwind.core.utilities.results.SuccessDataResult;
+import kodlamaio.nortwind.entities.dtos.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,12 +38,15 @@ public class UserManager implements UserService {
     }
 
     @Override
-    public DataResult<User> getByUserControl(String email, String password) {
-        User storedUser  = this.userDao.findByEmail(email);
-        if (storedUser != null && passwordEncoder.matches(password, storedUser.getPassword())) {
-            return new DataResult<User>(storedUser, true,"Login successful.");
+    public DataResult<UserDto> getByUserControl(String email, String password) {
+        User user  = this.userDao.findByEmail(email);
+        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+            UserDto userDto = new UserDto();
+            userDto.setId(user.getId());
+            userDto.setName(user.getUserName());
+            return new DataResult<UserDto>(userDto, true,"Login successful.");
         } else {
-            return new DataResult<User>(null,false,"Invalid email or password.");
+            return new DataResult<UserDto>(null,false,"Invalid email or password.");
         }
 
     }

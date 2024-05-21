@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Entity
 @Data
 @Table(name="users")
@@ -15,9 +17,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name="id")
-    private int id;
+    private UUID id;
 
     @Column(name="email",unique = true)
     @Email
@@ -25,8 +27,15 @@ public class User {
     @NotNull
     private String email;
 
+    @Column(name = "username")
+    @NotNull
+    @NotBlank
+    private String userName;
+
     @Column(name="password")
     @NotBlank
     @NotNull
     private String password;
+
+
 }

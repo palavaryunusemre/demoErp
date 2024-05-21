@@ -5,6 +5,7 @@ import kodlamaio.nortwind.business.abstracts.UserService;
 import kodlamaio.nortwind.core.entities.User;
 import kodlamaio.nortwind.core.utilities.results.DataResult;
 import kodlamaio.nortwind.core.utilities.results.ErrorDataResult;
+import kodlamaio.nortwind.entities.dtos.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +30,10 @@ public class UsersController {
         return ResponseEntity.ok(this.userService.add(user));
     }
     @PostMapping("/getByUserControl")
-    public DataResult<User> getByUserControl(@Valid @RequestBody User user) {
-        return this.userService.getByUserControl(user.getEmail(), user.getPassword());
+    public DataResult<UserDto> getByUserControl(@Valid @RequestBody Map<String, String> userCredentials) {
+        String email = userCredentials.get("email");
+        String password = userCredentials.get("password");
+        return this.userService.getByUserControl(email, password);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
