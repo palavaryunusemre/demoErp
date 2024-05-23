@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 import java.util.UUID;
 
 @Entity
-@Data
-@Table(name="users")
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
+@Table(name="users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -26,11 +26,6 @@ public class User {
     @NotBlank
     @NotNull
     private String email;
-
-    @Column(name = "username")
-    @NotNull
-    @NotBlank
-    private String userName;
 
     @Column(name="password")
     @NotBlank

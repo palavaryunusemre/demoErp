@@ -5,6 +5,7 @@ import kodlamaio.nortwind.business.abstracts.UserService;
 import kodlamaio.nortwind.core.entities.User;
 import kodlamaio.nortwind.core.utilities.results.DataResult;
 import kodlamaio.nortwind.core.utilities.results.ErrorDataResult;
+import kodlamaio.nortwind.entities.concretes.AdminUser;
 import kodlamaio.nortwind.entities.dtos.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,7 @@ public class UsersController {
         this.userService = userService;
     }
     @PostMapping(value = "/add")
-    public ResponseEntity<?> add(@Valid @RequestBody User user) {
+    public ResponseEntity<?> add(@Valid @RequestBody AdminUser user) {
         return ResponseEntity.ok(this.userService.add(user));
     }
     @PostMapping("/getByUserControl")

@@ -6,6 +6,7 @@ import kodlamaio.nortwind.core.entities.User;
 import kodlamaio.nortwind.core.utilities.results.DataResult;
 import kodlamaio.nortwind.core.utilities.results.Result;
 import kodlamaio.nortwind.core.utilities.results.SuccessDataResult;
+import kodlamaio.nortwind.entities.concretes.AdminUser;
 import kodlamaio.nortwind.entities.dtos.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,7 +23,7 @@ public class UserManager implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
     @Override
-    public Result add(User user) {
+    public Result add(AdminUser user) {
         try {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             this.userDao.save(user);
@@ -39,7 +40,7 @@ public class UserManager implements UserService {
 
     @Override
     public DataResult<UserDto> getByUserControl(String email, String password) {
-        User user  = this.userDao.findByEmail(email);
+        AdminUser user  = (AdminUser) this.userDao.findByEmail(email);
         if (user != null && passwordEncoder.matches(password, user.getPassword())) {
             UserDto userDto = new UserDto();
             userDto.setId(user.getId());
