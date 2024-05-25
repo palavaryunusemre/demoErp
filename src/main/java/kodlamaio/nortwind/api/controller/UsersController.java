@@ -30,7 +30,7 @@ public class UsersController {
         return ResponseEntity.ok(this.userService.add(user));
     }
     @PostMapping("/login")
-    public DataResult<UserResponseDto> getByUserControl(@Valid @RequestBody Map<String, String> userCredentials) {
+    public DataResult<String> getByUserControl(@Valid @RequestBody Map<String, String> userCredentials) {
         String email = userCredentials.get("email");
         String password = userCredentials.get("password");
         return this.userService.getByUserControl(email, password);

@@ -5,6 +5,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import kodlamaio.nortwind.entities.concretes.AdminUser;
+import kodlamaio.nortwind.entities.dtos.UserResponseDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.UUID;
 import java.util.function.Function;
 
 @Service
@@ -42,12 +45,17 @@ public class JwtService {
 
     }
 
-    public String generateToken(UserDetails user) {
+    public String generateToken(UserResponseDto user) {
         return Jwts.builder()
                 .setClaims(new HashMap<>())
-                .setSubject(user.getUsername())
+                .setSubject(user.getEmail())
+                .claim("userID",user.getId())
+                .claim("userName",user.getName())
+                .setIssuer("http://localhost:8080/api")
+                .setAudience("http://localhost:3000")
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+1000*60*24))
+                .setExpiration(new Date(System.currentTimeMillis()+1000*60*60))
+                .setId(UUID.randomUUID().toString())
                 .signWith(getKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

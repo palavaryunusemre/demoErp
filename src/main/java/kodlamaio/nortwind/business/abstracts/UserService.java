@@ -10,6 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 public interface UserService {
     Result add(AdminUser user);
     DataResult<User> findByEmail(String email);
-    DataResult<UserResponseDto> getByUserControl(String email, String password);
+    DataResult<String> getByUserControl(String email, String password);
     UserDetails loadUserByEmail(String email);
 }

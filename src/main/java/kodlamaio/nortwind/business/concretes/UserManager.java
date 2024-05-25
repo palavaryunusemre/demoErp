@@ -42,24 +42,22 @@ public class UserManager implements UserService {
     public DataResult<User> findByEmail(String email) {
         return new SuccessDataResult<User>(this.userDao.findByEmail(email),"Kullanıcı bulundu");
     }
-
     @Override
-    public DataResult<UserResponseDto> getByUserControl(String email, String password) {
+    public DataResult<String> getByUserControl(String email, String password) {
 
         AdminUser user  = (AdminUser) this.userDao.findByEmail(email);
         if (user != null && this.passwordEncoder().matches(password, user.getPassword())) {
-            var token=jwtService.generateToken(user);
             UserResponseDto userDto = new UserResponseDto();
             userDto.setId(user.getId());
             userDto.setName(user.getUserName());
-            userDto.setToken(token);
-            return new DataResult<UserResponseDto>(userDto, true,"Login successful.");
+            userDto.setEmail(email);
+            var token=jwtService.generateToken(userDto);
+            return new DataResult<String>(token, true,"Login successful.");
         } else {
-            return new DataResult<UserResponseDto>(null,false,"Invalid email or password.");
+            return new DataResult<String>(null,false,"Invalid email or password.");
         }
 
     }
-
     @Override
     public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
         User userDataResult = this.userDao.findByEmail(email);
