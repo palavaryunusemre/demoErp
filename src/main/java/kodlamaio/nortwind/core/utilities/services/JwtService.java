@@ -51,6 +51,7 @@ public class JwtService {
                 .setSubject(user.getEmail())
                 .claim("userID",user.getId())
                 .claim("userName",user.getName())
+                .claim("role",user.getRole())
                 .setIssuer("http://localhost:8080/api")
                 .setAudience("http://localhost:3000")
                 .setIssuedAt(new Date(System.currentTimeMillis()))

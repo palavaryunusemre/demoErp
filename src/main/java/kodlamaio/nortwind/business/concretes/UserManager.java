@@ -51,6 +51,7 @@ public class UserManager implements UserService {
             userDto.setId(user.getId());
             userDto.setName(user.getUserName());
             userDto.setEmail(email);
+            userDto.setRole(user.getRole().toString());
             var token=jwtService.generateToken(userDto);
             return new DataResult<String>(token, true,"Login successful.");
         } else {
