@@ -21,6 +21,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.authorizeRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/api/users/login").permitAll()
+                        .requestMatchers("/api/users/admin/**").hasRole("ADMIN")
                         .anyRequest()
                         .authenticated())
                 .sessionManagement((session)->session .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
